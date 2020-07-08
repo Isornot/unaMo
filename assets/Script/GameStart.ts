@@ -1,3 +1,5 @@
+import { SCENELIST } from "./config/Config";
+
 const {ccclass, property} = cc._decorator;
 
 @ccclass
@@ -15,6 +17,7 @@ export default class GameStart extends cc.Component {
     }
 
     onClickNew(){
-        this.node.addChild(cc.instantiate(this.prefabMain))
+        // 开始新游戏
+        cc.director.loadScene(SCENELIST.main);
     }
 }
