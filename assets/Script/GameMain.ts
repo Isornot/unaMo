@@ -1,4 +1,5 @@
 import { GameData } from "./config/GameData";
+import { SCENELIST } from "./config/Config";
 
 const {ccclass, property} = cc._decorator;
 
@@ -17,6 +18,12 @@ export default class GameMain extends cc.Component {
     @property(cc.Node)
     mask:cc.Node = null;    //遮罩
 
+    @property(cc.SpriteFrame)
+    btnNormalSframe:cc.SpriteFrame = null;   //按钮正常样式
+    
+    @property(cc.SpriteFrame)
+    btnCkSframe:cc.SpriteFrame = null;   //按钮选中样式
+    
     @property(cc.Node)
     content:cc.Node = null;   //
 
@@ -31,7 +38,31 @@ export default class GameMain extends cc.Component {
 
 
     start () {
+        this.initData();
         this.initView();
+    }
+
+    initData(){
+        // 初始化数据
+        let wData = cc.sys.localStorage.getItem('wordsList');
+        let customerLen = GameData.CUSTOMER.length;
+        if(!wData){
+            let wlist = [];
+            for(let i = 0; i<customerLen; i++){
+                wlist.push((i+1).toString()+'_1');
+            }
+            cc.log('udata',wlist);
+            cc.sys.localStorage.setItem('wordsList', JSON.stringify(wlist)); 
+        }else{
+            wData = JSON.parse(wData);
+            if(wData.length!=customerLen){
+                for(let i = wData.length - 1; i<customerLen; i++){
+                    wData.push((i+1).toString()+'_1');
+                    cc.log('uData234',wData)
+                    cc.sys.localStorage.setItem('wordsList', JSON.stringify(wData));
+                }
+            }
+        }
     }
 
     initView(){
@@ -65,12 +96,23 @@ export default class GameMain extends cc.Component {
      * @param target 
      * @param custom 0:院；1:摊；2:客
      */
-    onClickChangeUI(target, custom){
+    onClickChangeUI(event, custom){
+        let node = event.target;
+        node.parent.children.forEach(element => {
+            element.getComponent(cc.Sprite).spriteFrame = this.btnNormalSframe;            
+        });
+        node.getComponent(cc.Sprite).spriteFrame = this.btnCkSframe;
+
         this.content.removeAllChildren();
         cc.log('custom..', custom)
         let index = parseInt(custom);
         this.bg.spriteFrame = this.bgFrames[index];
         this.content.addChild(cc.instantiate(this.uiPrefabs[index]));
+    }
+
+    // 返回登陆界面
+    onClickBack(){
+        cc.director.loadScene(SCENELIST.login);
     }
 
     // update (dt) {}

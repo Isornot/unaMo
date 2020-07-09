@@ -9,19 +9,16 @@ export class GameData{
     /************************ 固定配置 *********************/
     /**
      * 客人配置
-     * @param id
+     * @param id - 与role图片和words的id有关联
      * @param sex 1男 2女
-     * 、name、sex、age、favorability、happyPic、sadPic、wordsId、voice?、bgm?
+     * @param initAge //初始年纪
+     * 、name、sex、age、
+     * favorability、happyPic、sadPic、wordsId、voice?、bgm?
      */
     static CUSTOMER = [        
-        {id:1, name:'', sex:2, age:3.5, favorability:5, happyPic:'1_h',sadPic:'1_sad', wordsId:1},
-        {id:2, name:'', sex:1, age:15, favorability:5, happyPic:'2_h',sadPic:'1_sad', wordsId:1},
+        {id:1, name:'三岁半', sex:2, age:3.5, desc:'打酱油的年纪，是个调皮的小孩儿', pic:'customer/role0'},
+        {id:2, name:'赵木匠', sex:1, age:51, desc:'是县里有名的木匠，喜欢做各种稀奇古怪的小玩具，深受小孩喜欢', pic:'customer/role19'},
     ]
-
-    static WORDS = {
-        '1_1':'una alreay not un 3 years little child!',
-        '2_1':'una 2_1 de words',
-    }
 
     /************************ 修改数据 *********************/
 
@@ -30,5 +27,4 @@ export class GameData{
         this.coin = this.coin+changeValue
         cc.log('current coin :'+this.coin)
     }
-
 }
