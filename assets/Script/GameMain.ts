@@ -31,7 +31,7 @@ export default class GameMain extends cc.Component {
     lblCoin:cc.Label = null;
 
     @property(cc.Label)
-    lblTime:cc.Label = null;
+    lblTime:cc.Label = null;    //时间 
     
     // @property(cc.Button)
     // btnZJ:cc.Button = null; //zjbtn
